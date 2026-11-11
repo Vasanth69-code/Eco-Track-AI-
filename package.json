@@ -1,0 +1,24 @@
+{
+  "name": "voltpath-ecotrack-ai",
+  "version": "1.0.0",
+  "description": "VoltPath - EcoTrack AI EV Route & Intelligent Charging Infrastructure Planner",
+  "private": true,
+  "scripts": {
+    "dev": "node run-all.js",
+    "start": "node run-all.js",
+    "dev:backend": "cd backend && npm start",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "test": "cd backend && npm test"
+  },
+  "keywords": [
+    "ev",
+    "route-planner",
+    "ecotrack",
+    "voltpath",
+    "telemetry",
+    "telematics"
+  ],
+  "author": "VoltPath Team",
+  "license": "ISC"
+}

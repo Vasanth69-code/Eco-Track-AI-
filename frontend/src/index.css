@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;900&family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #00F0FF;
+  --color-secondary: #CCFF00;
+}
+
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .dark body { background-color: #0B0E14; color: #F8FAFC; }
+  body { background-color: #F5F7FA; color: #0F172A; }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  .dark ::-webkit-scrollbar-thumb { background: #2D3342; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+}
+
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-xl border rounded-2xl;
+    background: rgba(21, 25, 33, 0.7);
+    border-color: rgba(45, 51, 66, 0.8);
+  }
+
+  .glass-card-light {
+    @apply backdrop-blur-xl border rounded-2xl;
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(203, 213, 225, 0.8);
+  }
+
+  .volt-btn {
+    @apply relative overflow-hidden font-bold transition-all duration-200 active:scale-95;
+    background: linear-gradient(135deg, #00F0FF, #0BC5EA);
+    color: #0B0E14;
+  }
+
+  .volt-btn:hover {
+    background: linear-gradient(135deg, #33F3FF, #0EC6EB);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+  }
+
+  .neon-border { border: 1px solid rgba(0, 240, 255, 0.3); }
+  .neon-border:hover { border-color: rgba(0, 240, 255, 0.8); box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
+
+  .stat-number { font-family: 'Chakra Petch', sans-serif; }
+
+  .page-container {
+    @apply min-h-screen transition-colors duration-200;
+  }
+
+  .dark .page-container { background-color: #0B0E14; }
+  .light .page-container { background-color: #F5F7FA; }
+}
+
+@layer utilities {
+  .text-gradient-volt {
+    background: linear-gradient(135deg, #00F0FF, #CCFF00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-volt { background: linear-gradient(135deg, #00F0FF 0%, #CCFF00 100%); }
+
+  .glow-primary { box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); }
+  .glow-secondary { box-shadow: 0 0 20px rgba(204, 255, 0, 0.3); }
+
+  .animate-entrance {
+    animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+}
+
+/* Leaflet customization */
+.leaflet-container {
+  font-family: 'Manrope', sans-serif;
+  background: #0B0E14;
+}
+
+.leaflet-tile { filter: brightness(0.8) saturate(1.2); }
+
+.charging-station-marker { cursor: pointer; }
+
+.custom-popup .leaflet-popup-content-wrapper {
+  background: #151921;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 12px;
+  color: #F8FAFC;
+}
+
+.custom-popup .leaflet-popup-tip { background: #151921; }
+
+/* Chart tooltip */
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: rgba(21, 25, 33, 0.95) !important;
+  border: 1px solid rgba(0, 240, 255, 0.3) !important;
+  border-radius: 8px !important;
+}

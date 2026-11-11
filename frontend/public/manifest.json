@@ -1,0 +1,22 @@
+{
+  "name": "VoltPath — The OS for the Electric Era",
+  "short_name": "VoltPath",
+  "description": "Intelligent EV route planning and charging optimization for India",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0E14",
+  "theme_color": "#00F0FF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/bolt.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["navigation", "travel", "utilities"],
+  "lang": "en-IN",
+  "dir": "ltr",
+  "scope": "/"
+}
