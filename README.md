@@ -1,4 +1,4 @@
-#  VoltPath - Smart EV Route Planning & Charging Station Platform
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/MERN-Stack-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MERN Stack">
@@ -681,5 +681,6 @@ This project is licensed under the MIT License.
 <p align="center">
   <img src="https://img.shields.io/badge/Thank%20You-4CAF50?style=for-the-badge" alt="Thank You">
 </p>
-#   E c o - T r a c k - A I -  
+#   E c o - T r a c k - A I - 
+ 
  
