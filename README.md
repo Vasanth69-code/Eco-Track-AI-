@@ -1,668 +1,688 @@
-
+# ⚡ EcoTrack AI
+### Intelligent Electric Vehicle Route Planning, Charging Infrastructure Discovery & Energy Management Platform
 
 <p align="center">
-  <img src="https://img.shields.io/badge/MERN-Stack-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MERN Stack">
-  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React">
-  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
-  <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js">
-  <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB">
-  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+  <img src="frontend/public/logo.png" alt="EcoTrack AI Logo" width="160" />
 </p>
 
-VoltPath is a comprehensive full-stack web application designed for Electric Vehicle (EV) owners and enthusiasts. It provides intelligent route planning with real-time charging station integration, weather insights, and advanced trip simulations to ensure a seamless travel experience.
+<p align="center">
+  <a href="#-features"><img src="https://img.shields.io/badge/Status-Production--Ready-00F0FF?style=for-the-badge&logo=shield" alt="Status"></a>
+  <img src="https://img.shields.io/badge/Stack-MERN-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MERN Stack">
+  <img src="https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React 18">
+  <img src="https://img.shields.io/badge/Vite-6.0-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite">
+  <img src="https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/Express-4.18-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js">
+  <img src="https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+</p>
+
+---
+
+## 📌 Executive Summary
+
+**EcoTrack AI** is an intelligent, full-stack Electric Vehicle (EV) routing and telemetry platform created and developed by **Hemavasanth**. Standard navigation applications (e.g. Google Maps) calculate paths using simple distance and vehicle speed limits, completely disregarding the thermodynamic and electrical realities of EVs: non-linear discharge rates, aerodynamic drag penalties, ambient temperature extremes, terrain slope gradients, and downhill regenerative braking.
+
+EcoTrack AI bridges this gap with an end-to-end physics and simulation engine powered by **TomTom Routing**, **Open Charge Map**, **OpenStreetMap Overpass API**, **OpenWeatherMap**, **Open-Elevation**, and direct in-car **ELM327 OBD-II Bluetooth Telemetry**. It schedules optimal high-power charging stops, protects long-term battery State of Health (SoH), and eliminates range anxiety for EV drivers.
 
 ---
 
 ## 📋 Table of Contents
 
-- [Problem Statement](#problem-statement)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Architecture](#project-architecture--folder-structure)
-- [Installation & Setup Guide](#installation--setup-guide)
-- [Environment Variables](#environment-variables)
-- [How the System Works](#how-the-system-works)
-- [UI/UX Description](#uiux-description)
-- [Screenshots](#screenshots)
-- [Future Improvements](#future-improvements)
-- [Deployment Guide](#deployment-guide)
-- [Author](#author)
+- [Key Highlights & Differentiators](#-key-highlights--differentiators)
+- [Comprehensive Feature Suite](#-comprehensive-feature-suite)
+- [System Architecture & Data Flow](#-system-architecture--data-flow)
+- [Deterministic EV Energy & Physics Model](#-deterministic-ev-energy--physics-model)
+- [Tech Stack](#-tech-stack)
+- [Directory & File Organization](#-directory--file-organization)
+- [Installation & Quick Start](#-installation--quick-start)
+- [Configuration & Environment Variables](#-configuration--environment-variables)
+- [API Reference & Route Catalog](#-api-reference--route-catalog)
+- [Preloaded EV Vehicle Database](#-preloaded-ev-vehicle-database)
+- [Hardware & Telemetry Integration (OBD-II / BLE)](#-hardware--telemetry-integration-obd-ii--ble)
+- [PDF Reports & Trip Sharing](#-pdf-reports--trip-sharing)
+- [Deployment Guide](#-deployment-guide)
+- [Author & Developer](#-author--developer)
+- [License](#-license)
 
 ---
 
-## 🎯 Problem Statement
+## 🌟 Key Highlights & Differentiators
 
-### Part 1: The Challenge
-Electric Vehicle owners face significant anxiety when planning long-distance trips. Unlike traditional fuel-powered vehicles, EVs require strategic planning around charging infrastructure. The key challenges include:
-
-- **Range Anxiety**: Drivers constantly worry about running out of battery before reaching their destination or the next charging station.
-- **Limited Charging Infrastructure**: Finding reliable, working charging stations along a planned route is difficult and time-consuming.
-- **Weather Impact**: Weather conditions significantly affect EV battery efficiency, yet most navigation tools don't account for these factors.
-- **Route Optimization**: Traditional GPS systems don't consider EV-specific parameters like battery capacity, charging speed, and optimal charging stops.
-
-### Part 2: The Solution
-VoltPath addresses these challenges by providing:
-
-1. **Smart Route Planning**: Enter your starting point and destination, and VoltPath calculates the optimal route considering your EV's specifications.
-2. **Charging Station Integration**: Displays available EV charging stations along your route with real-time availability information.
-3. **Weather-Aware Planning**: Integrates weather data to provide accurate range estimates and travel time predictions.
-4. **Trip Simulations**: Simulate different scenarios to understand energy consumption and plan charging stops effectively.
-5. **Vehicle Library**: Access a comprehensive database of EVs with their specifications to make informed decisions.
-6. **Trip History & Sharing**: Save your trips and share them with others for collaborative planning.
+| Capability | EcoTrack AI | Traditional GPS / Map Apps |
+| :--- | :--- | :--- |
+| **Route Energy Estimation** | Multi-variable physics engine: drag, elevation, HVAC, weather & speed | Distance / simple average speed only |
+| **Topography & Elevation** | Elevation profile via Open-Elevation, gradient slope penalty & regenerative downhill recovery | Completely ignores elevation impact on battery |
+| **Weather Drag & HVAC** | OpenWeatherMap API: cold/heat efficiency loss curves, wind vector, precipitation drag | No temperature or HVAC compensation |
+| **Charging Station Corridor** | Open Charge Map + Overpass OSM fallback with automated arrival/departure SoC scheduling | Generic search pins without SoC matching |
+| **OBD-II Bluetooth Telemetry** | Web Bluetooth API + ELM327 frame decoder for live State of Charge, speed, & battery temp | None |
+| **Battery Health Protection** | Depth of Discharge (DoD) tracking and fast-charging degradation analysis | None |
+| **Trip Reports & Sharing** | One-click branded PDF itinerary export + QR code for instant mobile handoff | Limited link sharing |
 
 ---
 
-## ✨ Features
+## ✨ Comprehensive Feature Suite
 
-### Core Features
+### 1. 🗺️ Smart EV Route Planning & Corridor Discovery
+- **Precision Route Generation**: Leverages TomTom Routing API for high-fidelity turn-by-turn navigation across Indian national highways, state expressways, and global roads.
+- **Corridor Charging Stop Scheduling**: Automatically scans charging infrastructure along a configurable corridor (buffer distance) around the route polyline.
+- **Dynamic Arrival/Departure SoC Calculation**: Computes exact arrival State of Charge (SoC %) at each charger and calculates recommended dwell time to recharge up to target capacity (e.g., 80% to avoid slow saturation curves).
+- **Interactive Multi-Waypoint Support**: Seamlessly add intermediate waypoints, adjust start/end locations, and review elevation profiles in real-time.
 
-- 🔐 **Authentication System**
-  - Google OAuth 2.0 integration
-  - JWT-based session management
-  - Protected routes for authenticated users
+### 2. ⚡ Topography, Elevation & Regenerative Braking
+- **Digital Elevation Model (DEM)**: Samples route coordinates and queries Open-Elevation API for elevation profiles.
+- **Gravitational Potential Calculation**: Models the potential energy expended when climbing steep gradients ($E = m \cdot g \cdot \Delta h$).
+- **Regenerative Descent Recovery**: Accurately credits harvested kinetic and potential energy back to the battery during downhill descents with powertrain efficiency coefficients.
 
-- 🗺️ **Route Planning**
-  - Interactive map interface using Leaflet
-  - TomTom Routing API integration
-  - Multiple route options with turn-by-turn directions
-  - Custom waypoints support
+### 3. 🌤️ Dynamic Environmental & Weather Adaptation
+- **Real-Time Weather Query**: Fetches live atmospheric data via OpenWeatherMap API for origin, intermediate stops, and destination.
+- **Temperature Efficiency Factor**: Compensates for battery internal resistance and cabin climate control (HVAC) load under extreme cold ($< 0^\circ\text{C}$ to $15^\circ\text{C}$) and extreme heat ($> 35^\circ\text{C}$).
+- **Precipitation & Aerodynamic Drag**: Factorizes road surface rolling resistance during rain, snow, or storm conditions, alongside wind velocity resistance.
 
-- ⚡ **EV Charging Stations**
-  - Open Charge Map API integration
-  - Real-time station availability
-  - Station details (connector types, power output, pricing)
-  - Filter stations by compatibility and speed
+### 4. 🔌 Dual-Source Charging Infrastructure Engine
+- **Primary Source - Open Charge Map**: Queries global network data including plug types (CCS2, Type 2, GB/T, CHAdeMO), power rating (kW), status, and pricing.
+- **Secondary Source - OpenStreetMap (Overpass API)**: Automatic fallback or supplement that queries OpenStreetMap Overpass servers for community-mapped EV charging nodes (`amenity=charging_station`).
+- **Connector Matching**: Filters chargers tailored to your vehicle's specific inlet standard (e.g., CCS2 for Tata Nexon EV / MG ZS EV).
 
-- 🌤️ **Weather Integration**
-  - OpenWeatherMap API integration
-  - Current weather conditions along route
-  - Weather-based range adjustment
-  - 5-day forecast for trip planning
+### 5. 📡 Live Telemetry & Web Bluetooth (OBD-II)
+- **ELM327 BLE Adapter Connection**: Connects to Bluetooth OBD-II dongles directly from modern browsers using the Web Bluetooth API (`navigator.bluetooth`).
+- **Standard OBD-II PID Parser**: Decodes Mode 01 standard PIDs:
+  - `012F`: Fuel / Battery State of Charge (%)
+  - `010D`: Instantaneous Vehicle Speed (km/h)
+  - `0105`: Coolant / Battery Pack Temperature (°C)
+  - `0142`: Control Module / Pack Voltage (V)
+  - `015B`: Hybrid/EV Battery Remaining Life / State of Health (%)
+- **Telemetry Simulation Mode**: Provides simulated SSE (Server-Sent Events) telemetry streams for testing without hardware plugged in.
 
-- 🚗 **Trip Management**
-  - Create, save, and manage trips
-  - Trip history with detailed analytics
-  - Share trips via unique links
-  - PDF export for offline reference
+### 6. 🔬 Advanced Trip Simulations & Battery SoH
+- **Weather Scenario Simulator**: Test how a route performs in scorching summer ($42^\circ\text{C}$) vs. freezing winter ($2^\circ\text{C}$) before embarking.
+- **Traffic Congestion Simulator**: Analyze battery drain during bumper-to-bumper city congestion vs. high-speed highway cruising.
+- **Battery Health Degradation Estimator**: Evaluates high-power DC fast-charging stress penalties and Depth of Discharge (DoD) to recommend battery-preserving charging habits.
 
-- 📊 **Simulations**
-  - Energy consumption modeling
-  - Multiple vehicle comparisons
-  - Scenario planning (different weather, driving styles)
-  - Cost estimation
+### 7. 🚘 Curated Vehicle Library & EV Comparison Tool
+- Preloaded catalog of popular Indian and International EVs:
+  - **Tata Nexon EV Max & Prime**, **Tata Tiago EV**, **Tata Tigor EV**
+  - **Mahindra XUV400**
+  - **MG ZS EV**
+  - **Hyundai Ioniq 5**, **Kia EV6**
+  - **BYD Atto 3**
+  - **Tesla Model 3 & Model Y**
+- Side-by-side comparison matrix: battery capacity (kWh), real-world range (km), DC charge rate (kW), 0-100 acceleration, ex-showroom pricing, and cost-per-km efficiency.
 
-- 🚙 **Vehicle Library**
-  - Comprehensive EV database
-  - Technical specifications (battery, range, charging)
-  - Side-by-side EV comparison tool
+### 8. 📄 Itinerary Export & Secure Social Sharing
+- **jsPDF Automated Export**: Generates professional, publication-ready PDF trip reports with turn-by-turn charging itineraries, energy breakdowns, and emergency contacts.
+- **Dynamic QR Code Generator**: Encodes trips into secure share tokens (`/shared/:token`) with instant QR code scanning for in-car passenger mobile handoff.
 
-### Additional Features
+---
 
-- 📱 **Responsive Design**
-  - Works on desktop and laptop screens
-  - Mobile-friendly responsive layout
+## 🏛️ System Architecture & Data Flow
 
-- 🎨 **Modern UI/UX**
-  - Smooth animations using Framer Motion
-  - Premium dashboard aesthetic
-  - Dark/Light theme support
+### Architecture Overview
 
-- 📈 **Analytics Dashboard**
-  - Trip statistics and charts
-  - Cost analysis
-  - Environmental impact tracking
+```
+                                      ┌─────────────────────────────────────────────────┐
+                                      │             EcoTrack AI Frontend (React)        │
+                                      │   Vite + Tailwind CSS + Framer Motion + Leaflet │
+                                      └────────────────────────┬────────────────────────┘
+                                                               │
+                                         REST APIs / JSON / HTTP Cookies
+                                                               │
+                                                               ▼
+                                      ┌─────────────────────────────────────────────────┐
+                                      │             Express.js Backend API              │
+                                      │   Port 5500 | JWT & OAuth | Modular Controllers │
+                                      └───────┬──────────────┬──────────────┬───────────┘
+                                              │              │              │
+                     ┌────────────────────────┘              │              └────────────────────────┐
+                     ▼                                       ▼                                       ▼
+        ┌─────────────────────────┐             ┌─────────────────────────┐             ┌─────────────────────────┐
+        │     MongoDB Database    │             │   External Geo & APIs   │             │   In-Vehicle Telemetry  │
+        ├─────────────────────────┤             ├─────────────────────────┤             ├─────────────────────────┤
+        │ • User Profiles & Auth  │             │ • TomTom Routing API    │             │ • ELM327 Bluetooth PIDs │
+        │ • Saved Trips & Waypts  │             │ • Open Charge Map       │             │ • Web Bluetooth API     │
+        │ • Custom EV Specs       │             │ • Overpass OSM API      │             │ • Live State of Charge  │
+        │ • Shareable Trip Tokens │             │ • OpenWeatherMap API    │             │ • Pack Temperature     │
+        └─────────────────────────┘             │ • Open-Elevation API    │             │ • Dynamic Simulation    │
+                                                └─────────────────────────┘             └─────────────────────────┘
+```
+
+### Architectural Diagrams
+
+The repository includes high-resolution architectural and data-flow diagrams in [`docs/`](docs/):
+
+1. **System Architecture Overview**  
+   ![System Architecture](docs/VoltPath-%20system%20architecture%20overview.png)
+
+2. **DFD Context Diagram (Level 0)**  
+   ![DFD Context Diagram](docs/VoltPath-DFD%20context%20diagram%20for%20VoltPath.png)
+
+3. **DFD Functional Decomposition Diagram (Level 1)**  
+   ![DFD Level 1 Decomposition](docs/VoltPath-DFD%20Level%201%20functional%20decomposition%20diagram.png)
+
+4. **Entity-Relationship (ER) Diagram**  
+   ![ER Diagram](docs/VoltPath-ER%20diagram%20for%20vehicle%20route%20planning.png)
+
+---
+
+## 📐 Deterministic EV Energy & Physics Model
+
+EcoTrack AI’s backend simulation engine (`backend/src/utils/energyCalculator.js`) calculates segment energy requirements using a deterministic physics model:
+
+$$\text{Energy}_{\text{segment}} = \left(\frac{D}{100}\right) \times \eta_{\text{base}} \times f_{\text{speed}} \times f_{\text{weather}} \times f_{\text{traffic}} \pm \Delta E_{\text{elevation}}$$
+
+Where:
+- $D$: Segment distance in kilometers
+- $\eta_{\text{base}}$: Vehicle factory efficiency in $\text{kWh}/100\text{km}$
+- $f_{\text{speed}}$: Aerodynamic quadratic penalty factor at highway cruising speeds
+- $f_{\text{weather}} = f_{\text{temp}} \times f_{\text{precip}} \times f_{\text{wind}}$:
+  - $f_{\text{temp}} = 1.35$ for $T < 0^\circ\text{C}$ (extreme cold + resistance + heating)
+  - $f_{\text{temp}} = 1.00$ for $20^\circ\text{C} \le T \le 25^\circ\text{C}$ (optimal thermal envelope)
+  - $f_{\text{temp}} = 1.12$ for $T > 35^\circ\text{C}$ (high cabin A/C compression)
+- $\Delta E_{\text{elevation}}$: Gravitational uphill energy demand or regenerative braking credit:
+
+$$\Delta E_{\text{elevation}} = \frac{m \cdot g \cdot \Delta h \cdot \kappa}{3.6 \times 10^6} \quad [\text{kWh}]$$
+
+*(with $\kappa = 1.15$ for motor uphill draw, and $\kappa = 0.65$ downhill regenerative conversion efficiency)*.
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend
+### Frontend Architecture
+- **Core Framework**: [React 18](https://react.dev/) (Functional Components, Hooks, Context API)
+- **Build Tool**: [Vite 6](https://vitejs.dev/) with Hot Module Replacement (HMR)
+- **Styling & Design System**: [Tailwind CSS 3.4](https://tailwindcss.com/) with PostCSS & Autoprefixer
+- **Motion & Micro-interactions**: [Framer Motion 11](https://www.framer.com/motion/)
+- **Mapping & Geospatial**: [Leaflet 1.9](https://leafletjs.com/) and [React-Leaflet 4](https://react-leaflet.js.org/)
+- **Data Visualization**: [Recharts 2.15](https://recharts.org/) (Elevation profiles & battery discharge curves)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Document Generation**: [jsPDF 4.2](https://github.com/parallax/jsPDF) & [jspdf-autotable 5.0](https://github.com/simonbengtsson/jsPDF-AutoTable)
+- **QR Codes**: [qrcode.react 4.2](https://github.com/zpao/qrcode.react)
+- **User Notifications**: [react-hot-toast 2.4](https://react-hot-toast.com/)
 
-| Technology | Purpose |
-|------------|---------|
-| React 18 | UI Framework |
-| Vite | Build Tool & Development Server |
-| JavaScript | Programming Language |
-| Tailwind CSS | Styling Framework |
-| Framer Motion | Animations |
-| React Router DOM | Client-side Routing |
-| Axios | HTTP Client |
-| Leaflet + React-Leaflet | Interactive Maps |
-| Recharts | Data Visualization |
-| Lucide React | Icon Library |
-| React Hot Toast | Notifications |
-| jsPDF | PDF Generation |
+### Backend Architecture
+- **Runtime**: [Node.js 18+](https://nodejs.org/)
+- **Framework**: [Express.js 4.18](https://expressjs.com/)
+- **Database**: [MongoDB](https://www.mongodb.com/) via [Mongoose 8 ODM](https://mongoosejs.com/)
+- **Authentication**: [Passport.js](https://www.passportjs.org/) (Google OAuth 2.0 Strategy) & [JSON Web Tokens (JWT)](https://jwt.io/)
+- **Security & Utilities**: `bcryptjs`, `cookie-parser`, `cors`, `express-validator`, `uuid`
+- **HTTP Client**: [Axios 1.6](https://axios-http.com/)
 
-### Backend
-
-| Technology | Purpose |
-|------------|---------|
-| Node.js | Runtime Environment |
-| Express.js | Web Framework |
-| MongoDB | Database |
-| Mongoose | ODM Library |
-| Passport.js | Authentication (OAuth) |
-| JWT | Token-based Auth |
-| bcryptjs | Password Hashing |
-| Cookie Parser | Cookie Handling |
-| Express Session | Session Management |
-| UUID | Unique ID Generation |
-
-### External APIs
-
-| API | Purpose |
-|-----|---------|
-| TomTom API | Route generation, geocoding |
-| OpenWeatherMap API | Weather data |
-| Open Charge Map API | EV charging station data |
+### Geospatial & Telematics Services
+- **TomTom Maps API**: Routing, Turn-by-Turn directions, Reverse Geocoding, and Place Autocomplete
+- **Open Charge Map API**: Global EV charging station data, connectors, power kW
+- **Overpass API (OSM)**: OpenStreetMap direct infrastructure fallback queries
+- **OpenWeatherMap API**: Live temperature, weather condition, and wind speed
+- **Open-Elevation API**: Topographic elevation profile queries
+- **Web Bluetooth API**: In-browser ELM327 OBD-II wireless communication
 
 ---
 
-## 📂 Project Architecture / Folder Structure
+## 📂 Directory & File Organization
 
 ```
-voltpath/
-│
-├── frontend/                      # React Frontend Application
-│   ├── public/                   # Static assets
-│   │   ├── manifest.json         # PWA manifest
-│   │   └── sw.js                 # Service worker
+EcoTrack-AI/
+├── backend/                       # Express.js REST API Server
 │   ├── src/
-│   │   ├── animations/          # Animation variants (Framer Motion)
-│   │   │   └── variants.js
-│   │   ├── components/          # React Components
-│   │   │   ├── common/          # Reusable components
-│   │   │   │   ├── LoadingSpinner.jsx
-│   │   │   │   ├── ProtectedRoute.jsx
-│   │   │   │   ├── ShareModal.jsx
-│   │   │   │   └── StatCard.jsx
-│   │   │   └── layout/          # Layout components
-│   │   │       ├── Navbar.jsx
-│   │   │       └── Sidebar.jsx
-│   │   ├── config/              # Configuration files
-│   │   │   └── constants.js
-│   │   ├── context/             # React Context providers
-│   │   │   ├── AuthContext.jsx
-│   │   │   └── ThemeContext.jsx
-│   │   ├── layouts/             # Page layouts
-│   │   │   └── AppLayout.jsx
-│   │   ├── pages/               # Page components
-│   │   │   ├── AuthCallbackPage.jsx
-│   │   │   ├── ChargingStationsPage.jsx
-│   │   │   ├── DashboardPage.jsx
-│   │   │   ├── EVComparisonPage.jsx
-│   │   │   ├── LandingPage.jsx
-│   │   │   ├── ProfilePage.jsx
-│   │   │   ├── RoutePlannerPage.jsx
-│   │   │   ├── SharedTripPage.jsx
-│   │   │   ├── SimulationsPage.jsx
-│   │   │   ├── TripDetailPage.jsx
-│   │   │   ├── TripHistoryPage.jsx
-│   │   │   ├── TripResultsPage.jsx
-│   │   │   └── VehicleLibraryPage.jsx
-│   │   ├── services/            # API service modules
-│   │   │   ├── apiService.js
-│   │   │   └── authService.js
-│   │   ├── utils/               # Utility functions
-│   │   │   ├── helpers.js
-│   │   │   └── pdfExport.js
-│   │   ├── App.jsx              # Main App component
-│   │   ├── index.css            # Global styles
-│   │   └── main.jsx             # Entry point
-│   ├── index.html               # HTML template
-│   ├── package.json             # Frontend dependencies
-│   ├── tailwind.config.js      # Tailwind configuration
-│   ├── postcss.config.js       # PostCSS configuration
-│   └── vite.config.js          # Vite configuration
-│
-├── backend/                      # Node.js Backend API
-│   ├── src/
-│   │   ├── config/              # Configuration files
-│   │   │   ├── databaseConfig.js
-│   │   │   ├── envConfig.js
-│   │   │   └── passportConfig.js
-│   │   ├── controllers/         # Route controllers
-│   │   │   ├── authController.js
-│   │   │   ├── routeController.js
-│   │   │   ├── shareController.js
-│   │   │   ├── simulationController.js
-│   │   │   ├── stationController.js
-│   │   │   ├── tripController.js
-│   │   │   └── vehicleController.js
-│   │   ├── data/                # Static data files
-│   │   │   └── evVehicles.js
-│   │   ├── middlewares/        # Express middlewares
-│   │   │   └── authMiddleware.js
-│   │   ├── models/              # Mongoose models
-│   │   │   ├── shareModel.js
-│   │   │   ├── tripModel.js
-│   │   │   ├── userModel.js
-│   │   │   └── vehicleModel.js
-│   │   ├── routes/              # Express routes
+│   │   ├── app.js                 # Express middleware configuration & route mounting
+│   │   ├── server.js              # Server bootstrapper & DB connection listener
+│   │   ├── config/
+│   │   │   ├── databaseConfig.js  # Mongoose MongoDB Atlas connection handler
+│   │   │   ├── envConfig.js       # Centralized process.env validation
+│   │   │   └── passportConfig.js  # Google OAuth 2.0 Passport strategy
+│   │   ├── controllers/
+│   │   │   ├── authController.js       # Register, login, Google session, me, logout
+│   │   │   ├── routeController.js      # Calculate route, geocode, place autocomplete
+│   │   │   ├── stationController.js    # Bounding box & route corridor station search
+│   │   │   ├── simulationController.js # Weather, traffic, and battery degradation simulations
+│   │   │   ├── telemetryController.js  # OBD PID normalization & SSE stream
+│   │   │   ├── tripController.js       # CRUD operations for user trips & stats
+│   │   │   ├── vehicleController.js    # Preloaded EV specs & query endpoints
+│   │   │   └── shareController.js      # Tokenized public trip sharing
+│   │   ├── data/
+│   │   │   └── evVehicles.js      # Complete catalog of Indian & global EV specifications
+│   │   ├── middlewares/
+│   │   │   └── authMiddleware.js  # JWT cookie & Authorization header validation
+│   │   ├── models/
+│   │   │   ├── userModel.js       # User schema (local + Google OAuth identity)
+│   │   │   ├── tripModel.js       # Persisted trip schema with coordinates & stops
+│   │   │   ├── vehicleModel.js    # Vehicle specification schema
+│   │   │   └── shareModel.js      # Shared trip token schema with expiration
+│   │   ├── routes/                # Express router endpoints
 │   │   │   ├── authRoutes.js
 │   │   │   ├── routeRoutes.js
-│   │   │   ├── shareRoutes.js
-│   │   │   ├── simulationRoutes.js
 │   │   │   ├── stationRoutes.js
+│   │   │   ├── simulationRoutes.js
+│   │   │   ├── telemetryRoutes.js
 │   │   │   ├── tripRoutes.js
-│   │   │   └── vehicleRoutes.js
-│   │   ├── services/            # Business logic services
-│   │   │   ├── authService.js
-│   │   │   ├── routeService.js
-│   │   │   ├── stationService.js
-│   │   │   ├── trafficService.js
-│   │   │   ├── tripService.js
-│   │   │   └── weatherService.js
-│   │   ├── utils/               # Utility functions
-│   │   │   ├── energyCalculator.js
-│   │   │   └── responseHelper.js
-│   │   ├── app.js               # Express app configuration
-│   │   └── server.js            # Server entry point
-│   ├── package.json             # Backend dependencies
-│   └── .gitignore               # Git ignore file
+│   │   │   ├── vehicleRoutes.js
+│   │   │   └── shareRoutes.js
+│   │   ├── services/              # Business logic & 3rd-party API integrations
+│   │   │   ├── routeService.js    # TomTom route integration & corridor calculation
+│   │   │   ├── stationService.js  # Open Charge Map aggregator
+│   │   │   ├── overpassService.js # OpenStreetMap Overpass API fallback
+│   │   │   ├── elevationService.js# Open-Elevation lookup & topography profile
+│   │   │   ├── weatherService.js  # OpenWeatherMap API consumer
+│   │   │   ├── trafficService.js  # Traffic delay & stop-and-go energy calculator
+│   │   │   ├── telemetryService.js# OBD-II PID decoder (ELM327 hex parser)
+│   │   │   ├── tripService.js     # User trip persistence logic
+│   │   │   └── authService.js     # Password hashing & JWT generation
+│   │   └── utils/
+│   │       ├── energyCalculator.js# Deterministic physics engine & SoC scheduler
+│   │       └── responseHelper.js  # Standardized API response formatters
+│   ├── test/                      # Service test suites
+│   ├── package.json
+│   ├── .env.example               # Template environment configuration
+│   └── .env                       # Backend environment variables
 │
-├── .env                          # Environment variables (root)
-├── package.json                  # Root package.json (optional)
-└── README.md                     # Project documentation
+├── frontend/                      # Vite + React 18 Application
+│   ├── public/
+│   │   ├── logo.png               # EcoTrack AI branding logo
+│   │   ├── manifest.json          # Progressive Web App manifest
+│   │   └── sw.js                  # PWA service worker
+│   ├── src/
+│   │   ├── animations/
+│   │   │   └── variants.js        # Framer Motion transition definitions
+│   │   ├── components/
+│   │   │   ├── common/
+│   │   │   │   ├── LoadingSpinner.jsx
+│   │   │   │   ├── PlaceAutocompleteInput.jsx # TomTom live search input
+│   │   │   │   ├── ProtectedRoute.jsx
+│   │   │   │   ├── ShareModal.jsx             # Share link + dynamic QR generator
+│   │   │   │   ├── StatCard.jsx               # Dashboard metric card
+│   │   │   │   └── StationDetailDrawer.jsx    # Side drawer for station details
+│   │   │   ├── layout/
+│   │   │   │   ├── Navbar.jsx
+│   │   │   │   └── Sidebar.jsx
+│   │   │   ├── navigation/
+│   │   │   │   └── LiveNavigationOverlay.jsx  # In-car turn-by-turn HUD overlay
+│   │   │   └── telemetry/
+│   │   │       └── OBDConnectionModal.jsx     # Web Bluetooth device pairing modal
+│   │   ├── config/
+│   │   │   └── constants.js       # Routes, API endpoints, default Indian vehicle specs
+│   │   ├── context/
+│   │   │   ├── AuthContext.jsx    # User session, login, Google callback state
+│   │   │   ├── TelemetryContext.jsx # Live OBD-II Bluetooth streaming state
+│   │   │   └── ThemeContext.jsx   # UI theme provider
+│   │   ├── layouts/
+│   │   │   └── AppLayout.jsx      # Persistent sidebar & navbar shell
+│   │   ├── pages/
+│   │   │   ├── LandingPage.jsx          # Futuristic hero, features, CTA
+│   │   │   ├── DashboardPage.jsx        # Energy metrics, recent trips, quick actions
+│   │   │   ├── RoutePlannerPage.jsx     # Route planner, map, waypoint controls
+│   │   │   ├── TripResultsPage.jsx      # Route analysis, elevation, charger schedule
+│   │   │   ├── TripDetailPage.jsx       # Deep dive into individual saved trip
+│   │   │   ├── TripHistoryPage.jsx      # Paginated user trip archives
+│   │   │   ├── ChargingStationsPage.jsx # Map explorer with station filtering
+│   │   │   ├── SimulationsPage.jsx      # Weather, traffic & battery degradation simulator
+│   │   │   ├── VehicleLibraryPage.jsx   # EV showroom with specifications
+│   │   │   ├── EVComparisonPage.jsx     # Side-by-side EV comparison table
+│   │   │   ├── SharedTripPage.jsx       # Public read-only trip viewer
+│   │   │   ├── ProfilePage.jsx          # User vehicle defaults & preferences
+│   │   │   └── AuthCallbackPage.jsx     # Google OAuth redirect handler
+│   │   ├── services/
+│   │   │   ├── apiService.js      # Axios client with interceptors
+│   │   │   └── authService.js     # Auth API requests
+│   │   ├── utils/
+│   │   │   ├── helpers.js         # Formatting (INR currency ₹, distances, duration)
+│   │   │   └── pdfExport.js       # jsPDF itinerary builder
+│   │   ├── App.jsx                # React Router root
+│   │   ├── index.css              # Tailwind CSS directives & cyber glow effects
+│   │   └── main.jsx               # React DOM entrypoint
+│   ├── tailwind.config.js         # Cyberpunk/Modern EV color palette
+│   ├── vite.config.js             # Vite development server settings
+│   ├── vercel.json                # Single Page App routing rewrites
+│   ├── package.json
+│   ├── .env.example               # Template environment configuration
+│   └── .env                       # Frontend environment variables
+│
+├── docs/                          # System Architecture & DFD Diagrams
+│   ├── VoltPath- system architecture overview.png
+│   ├── VoltPath-DFD context diagram for VoltPath.png
+│   ├── VoltPath-DFD Level 1 functional decomposition diagram.png
+│   └── VoltPath-ER diagram for vehicle route planning.png
+│
+├── package.json                   # Root orchestrator scripts
+├── run-all.js                     # Concurrent runner script (Frontend + Backend)
+├── LICENSE                        # ISC License
+└── README.md                      # Complete documentation
 ```
 
 ---
 
-## 🚀 Installation & Setup Guide
+## 🚀 Installation & Quick Start
 
 ### Prerequisites
+- **Node.js**: `v18.0.0` or higher installed ([Download Node.js](https://nodejs.org/))
+- **MongoDB**: Local MongoDB instance (`mongodb://localhost:27017/voltpath`) or a free [MongoDB Atlas Cluster](https://www.mongodb.com/cloud/atlas)
+- **API Keys**:
+  - TomTom Developer Key ([Get free TomTom key](https://developer.tomtom.com/))
+  - OpenWeatherMap API Key ([Get free OpenWeather key](https://openweathermap.org/api))
+  - Open Charge Map API Key ([Get free Open Charge Map key](https://openchargemap.org/site/develop/api)) *(Optional, fallback to OpenStreetMap is built-in)*
 
-Before installing VoltPath, ensure you have the following:
-
-- **Node.js** (v18 or higher) - [Download](https://nodejs.org/)
-- **npm** or **yarn** (npm comes with Node.js)
-- **MongoDB** (local or Atlas cloud database)
-- **Git** for version control
+---
 
 ### Step 1: Clone the Repository
 
-```
-bash
-git clone <repository-url>
+```bash
+git clone https://github.com/hemavasanth/VoltPath.git
 cd VoltPath
 ```
 
-### Step 2: Backend Setup
+---
 
-Navigate to the backend directory and install dependencies:
+### Step 2: Install Dependencies
 
-```
-bash
+You can install dependencies for root, backend, and frontend:
+
+```bash
+# 1. Install backend dependencies
 cd backend
 npm install
-```
 
-Create a `.env` file in the `backend` directory (see Environment Variables section below).
-
-Start the backend server:
-
-```
-bash
-# Development mode (with auto-reload)
-npm run dev
-
-# Production mode
-npm start
-```
-
-The backend server will start on `http://localhost:5500`
-
-### Step 3: Frontend Setup
-
-Open a new terminal, navigate to the frontend directory, and install dependencies:
-
-```
-bash
-cd frontend
+# 2. Install frontend dependencies
+cd ../frontend
 npm install
+
+# Return to root directory
+cd ..
 ```
-
-Create environment variables (if not already created):
-
-```
-bash
-# Create .env file in frontend directory
-VITE_BACKEND_URL=http://localhost:5500
-```
-
-Start the frontend development server:
-
-```
-bash
-npm run dev
-```
-
-The frontend application will be available at `http://localhost:5173`
-
-### Step 4: Access the Application
-
-1. Open your browser and navigate to `http://localhost:5173`
-2. Sign in with your Google account to access the dashboard
-3. Start planning your EV routes!
 
 ---
 
-## 🔑 Environment Variables
+### Step 3: Configure Environment Variables
 
-### Root Directory (.env)
+Create `.env` in `backend/` and `frontend/` (sample files provided as `.env.example` in both folders):
 
-Create a `.env` file in the root project directory:
+```bash
+# Backend environment configuration
+cp backend/.env.example backend/.env
 
-```
-env
-# Backend Configuration
-MONGO_URL=mongodb://localhost:27017/voltpath
-PORT=5500
-
-# Frontend Configuration
-VITE_BACKEND_URL=http://localhost:5500
-VITE_API_BASE_URL=http://localhost:5500/api
+# Frontend environment configuration
+cp frontend/.env.example frontend/.env
 ```
 
-### Backend (.env)
+Fill in your respective credentials as described in the [Environment Variables](#-configuration--environment-variables) section below.
 
-Create a `.env` file in the `backend` directory:
+---
 
+### Step 4: Run the Application (One-Command Startup)
+
+From the **root directory**, launch both backend and frontend concurrently:
+
+```bash
+npm run dev
 ```
-env
-# Server Configuration
+
+> **What happens behind the scenes:** `node run-all.js` boots the Express API on `http://localhost:5500` and the Vite React server on `http://localhost:5173`.
+
+#### Running Services Separately (Optional):
+
+```bash
+# In Terminal 1 (Backend API):
+cd backend
+npm start
+# Server runs on http://localhost:5500
+
+# In Terminal 2 (Frontend Client):
+cd frontend
+npm run dev
+# Vite runs on http://localhost:5173
+```
+
+Open your browser at **`http://localhost:5173`** to access EcoTrack AI!
+
+---
+
+## 🔑 Configuration & Environment Variables
+
+### Backend Environment Configuration (`backend/.env`)
+
+Create a `.env` file inside the `backend` folder:
+
+```env
+# Server Port & Environment
 PORT=5500
 NODE_ENV=development
 FRONTEND_URL=http://localhost:5173
 
-# MongoDB Configuration
-MONGO_URL=mongodb://localhost:27017/voltpath
+# MongoDB Connection String (Atlas URI or Local)
+MONGO_URL=mongodb+srv://<username>:<password>@cluster0.mongodb.net/voltpath?retryWrites=true&w=majority
 DB_NAME=voltpath
 
-# JWT Configuration
-JWT_SECRET=your-super-secret-jwt-key-change-in-production
+# JWT Signing Secret
+JWT_SECRET=your_super_secret_jwt_key_here_change_in_production
 
-# Google OAuth Configuration
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
+# Google OAuth 2.0 Credentials (Optional, for Google Sign-In)
+GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your_google_client_secret
 GOOGLE_REDIRECT_URI=http://localhost:5500/api/auth/google/callback
 
-# External APIs
-TOMTOM_API_KEY=your-tomtom-api-key
-OPENWEATHER_API_KEY=your-openweather-api-key
-OPEN_CHARGE_MAP_API_KEY=your-opencharge-map-api-key
+# 3rd-Party Geo & Weather APIs
+TOMTOM_API_KEY=your_tomtom_api_key_here
+OPENWEATHER_API_KEY=your_openweather_api_key_here
+OPEN_CHARGE_MAP_API_KEY=your_open_charge_map_api_key_here
 ```
 
-### Frontend (.env)
+### Frontend Environment Configuration (`frontend/.env`)
 
-Create a `.env` file in the `frontend` directory:
+Create a `.env` file inside the `frontend` folder:
 
-```
-env
+```env
+# Backend Base URL
 VITE_BACKEND_URL=http://localhost:5500
+VITE_API_BASE_URL=http://localhost:5500/api
 ```
 
-### Getting API Keys
+---
 
-1. **TomTom API**: Sign up at [TomTom Developer Portal](https://developer.tomtom.com/)
-2. **OpenWeatherMap API**: Get your API key at [OpenWeatherMap](https://openweathermap.org/api)
-3. **Open Charge Map API**: Register at [Open Charge Map](https://openchargemap.org/site/develop/api)
-4. **Google OAuth**: Set up in [Google Cloud Console](https://console.cloud.google.com/)
+## 📡 API Reference & Route Catalog
+
+### Authentication Endpoints (`/api/auth`)
+| Method | Endpoint | Auth | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | Public | Register user with email, name, and password |
+| `POST` | `/api/auth/login` | Public | Login with email/password, issues JWT HTTP cookie |
+| `GET` | `/api/auth/google` | Public | Initiates Google OAuth 2.0 authentication flow |
+| `GET` | `/api/auth/google/callback` | Public | Google OAuth redirect handler |
+| `POST` | `/api/auth/google/session` | Public | Exchanges Google profile for JWT session |
+| `GET` | `/api/auth/me` | User | Get current logged-in user details and saved EV settings |
+| `PUT` | `/api/auth/vehicle` | User | Update user's active default vehicle configuration |
+| `POST` | `/api/auth/logout` | User | Clear session and authentication cookies |
+
+### Routing & Geocoding Endpoints (`/api/routes`)
+| Method | Endpoint | Auth | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/routes/calculate` | User | Computes EV-optimized route, elevation, weather impact & charging stops |
+| `GET` | `/api/routes/geocode` | Public | Converts location address string to latitude/longitude |
+| `GET` | `/api/routes/autocomplete` | Public | Real-time place autocomplete query for location inputs |
+
+### Charging Stations Endpoints (`/api/stations`)
+| Method | Endpoint | Auth | Description |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/stations` | Public | Query charging stations with optional proximity filters |
+| `GET` | `/api/stations/bbox` | Public | Returns charging stations within map viewport bounding box |
+| `POST` | `/api/stations/corridor` | Public | Finds charging stations along a route corridor (with OSM fallback) |
+
+### Trip Management Endpoints (`/api/trips`)
+| Method | Endpoint | Auth | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/trips` | User | Save a planned route and charging itinerary |
+| `GET` | `/api/trips` | User | List all saved trips for the authenticated user |
+| `GET` | `/api/trips/stats` | User | Aggregate analytics: total distance, energy consumed, carbon saved |
+| `GET` | `/api/trips/:id` | User | Retrieve specific trip details |
+| `DELETE`| `/api/trips/:id` | User | Delete a trip from history |
+
+### Simulation Endpoints (`/api/simulations`)
+| Method | Endpoint | Auth | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/simulations/weather` | User | Simulates temperature, wind, and precipitation drain on battery range |
+| `POST` | `/api/simulations/traffic` | User | Simulates traffic congestion impact on velocity and energy consumption |
+| `POST` | `/api/simulations/battery-degradation` | User | Computes estimated State of Health (SoH) loss & DoD analysis |
+
+### Telemetry Endpoints (`/api/telemetry`)
+| Method | Endpoint | Auth | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/telemetry/normalize` | Public | Decodes raw ELM327 hex frames to structured telemetry objects |
+| `GET` | `/api/telemetry/simulate` | Public | Streams simulated vehicle telemetry (SoC, speed, temp, voltage) |
+| `GET` | `/api/telemetry/capabilities/:id` | Public | Lists supported OBD-II PIDs for a specific EV model |
+
+### Vehicle Library & Public Sharing Endpoints
+| Method | Endpoint | Auth | Description |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/vehicles` | Public | Returns complete preloaded vehicle library |
+| `GET` | `/api/vehicles/:id` | Public | Returns specific vehicle specs, battery capacity, and charging curves |
+| `POST` | `/api/share` | User | Generates a shareable token for a trip |
+| `GET` | `/api/share/:token` | Public | Returns public trip data for the given token |
 
 ---
 
-## ⚙️ How the System Works
+## 🚗 Preloaded EV Vehicle Database
 
-### Overall Workflow
+EcoTrack AI comes equipped with factory specifications for India's leading EV fleet as well as popular global models:
+
+```javascript
+[
+  {
+    name: "Tata Nexon EV Max",
+    batteryCapacityKwh: 40.5,
+    usableBatteryPct: 90,
+    rangeKm: 437,
+    efficiencyKwhPer100km: 15.0,
+    chargingPowerKw: 50,
+    connector: "CCS2"
+  },
+  {
+    name: "Tata Tiago EV",
+    batteryCapacityKwh: 24.0,
+    usableBatteryPct: 90,
+    rangeKm: 315,
+    efficiencyKwhPer100km: 12.0,
+    chargingPowerKw: 25,
+    connector: "CCS2"
+  },
+  {
+    name: "Mahindra XUV400",
+    batteryCapacityKwh: 39.4,
+    usableBatteryPct: 92,
+    rangeKm: 456,
+    efficiencyKwhPer100km: 14.5,
+    chargingPowerKw: 50,
+    connector: "CCS2"
+  },
+  {
+    name: "MG ZS EV",
+    batteryCapacityKwh: 50.3,
+    usableBatteryPct: 92,
+    rangeKm: 461,
+    efficiencyKwhPer100km: 15.8,
+    chargingPowerKw: 50,
+    connector: "CCS2"
+  },
+  {
+    name: "Hyundai Ioniq 5",
+    batteryCapacityKwh: 72.6,
+    usableBatteryPct: 95,
+    rangeKm: 631,
+    efficiencyKwhPer100km: 16.0,
+    chargingPowerKw: 350,
+    connector: "CCS2"
+  },
+  {
+    name: "Tesla Model 3 Long Range",
+    batteryCapacityKwh: 82.0,
+    usableBatteryPct: 95,
+    rangeKm: 602,
+    efficiencyKwhPer100km: 14.8,
+    chargingPowerKw: 250,
+    connector: "Tesla / CCS2"
+  }
+]
+```
+
+Users can also define **custom vehicle profiles** with their own battery capacity, reserve limits, charging rates, and electricity tariffs in their Profile dashboard.
+
+---
+
+## 📡 Hardware & Telemetry Integration (OBD-II / BLE)
+
+EcoTrack AI includes native support for real-time vehicular data extraction:
 
 ```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   User Input    │────▶│   Backend API   │────▶│   External APIs │
-│  (Frontend)     │     │   (Express)     │     │ (TomTom, Weather│
-└─────────────────┘     └─────────────────┘     │  OpenChargeMap) │
-        │                      │                 └─────────────────┘
-        │                      ▼
-        │              ┌─────────────────┐
-        │              │   MongoDB       │
-        │              │   Database      │
-        │              └─────────────────┘
-        │                      │
-        ▼                      ▼
-┌─────────────────┐     ┌─────────────────┐
-│  Display Map &  │◀────│   Response      │
-│  Results        │     │   (JSON)        │
-└─────────────────┘     └─────────────────┘
+┌────────────────────────┐      Bluetooth Low Energy      ┌─────────────────────────┐
+│  ELM327 OBD-II Adapter │ ─────────────────────────────▶ │   Web Bluetooth Client  │
+│  (Plugged into EV port)│        (GATT Service)          │   (Browser Telemetry)   │
+└────────────────────────┘                                └────────────┬────────────┘
+                                                                       │
+                                                            Raw HEX Frames (e.g. "41 2F 9E")
+                                                                       │
+                                                                       ▼
+                                                          ┌─────────────────────────┐
+                                                          │ EcoTrack AI Engine      │
+                                                          │ • Decodes SoC: 62.0%    │
+                                                          │ • Speed: 84 km/h        │
+                                                          │ • Pack Temp: 32°C       │
+                                                          │ • Pack Voltage: 382.4V  │
+                                                          └─────────────────────────┘
 ```
 
-### Detailed Workflow
-
-1. **User Authentication**
-   - User clicks "Sign in with Google"
-   - Backend initiates OAuth 2.0 flow
-   - Google redirects back with authorization code
-   - Backend exchanges code for user profile
-   - JWT token created and stored in cookies
-   - User session established
-
-2. **Route Planning**
-   - User enters starting point and destination
-   - Frontend sends coordinates to backend
-   - Backend calls TomTom Routing API
-   - Route polyline and metadata returned
-   - Frontend renders route on Leaflet map
-
-3. **Charging Station Discovery**
-   - Backend receives route coordinates
-   - Calls Open Charge Map API along the route corridor
-   - Filters stations by EV compatibility
-   - Returns sorted list of stations with details
-
-4. **Weather Integration**
-   - Backend fetches weather for start, waypoints, and destination
-   - Calculates weather impact on energy consumption
-   - Returns adjusted range estimates
-
-5. **Trip Management**
-   - User saves trip to MongoDB
-   - Trip includes all route, station, and weather data
-   - User can view history, share trips, or export as PDF
+1. Click **Connect OBD-II** in the navigation header.
+2. Select your paired ELM327 Bluetooth device in the browser prompt.
+3. EcoTrack AI automatically subscribes to standard notify characteristics, parses raw hex frames, and dynamically updates your Live Navigation Overlay with real-time battery SoC and distance-to-empty metrics!
 
 ---
 
-## 🎨 UI/UX Description
+## 📄 PDF Reports & Trip Sharing
 
-VoltPath features a modern, premium dashboard design with the following characteristics:
-
-### Design Philosophy
-
-- **Clean & Minimal**: Uncluttered interface with ample white space
-- **Data-First**: Prioritizes information clarity and readability
-- **Accessible**: High contrast, readable fonts, intuitive navigation
-
-### Visual Style
-
-- **Color Scheme**: Professional blue accent colors with neutral backgrounds
-- **Typography**: Clean sans-serif fonts for optimal readability
-- **Icons**: Consistent Lucide React icon set throughout
-- **Cards**: Elevated card components with subtle shadows
-- **Maps**: Full-width interactive maps with custom markers
-
-### Animations
-
-- **Framer Motion**: Smooth page transitions and component animations
-- **Micro-interactions**: Button hover effects, loading states
-- **Map Animations**: Route drawing, marker popups
-- **Dashboard**: Animated charts and statistics cards
-
-### Responsive Behavior
-
-- **Desktop Optimized**: Full dashboard layout (1200px+)
-- **Laptop Compatible**: Adjusted layouts (1024px - 1199px)
-- **Fluid Grid**: Tailwind CSS responsive classes
-
-### Key UI Components
-
-1. **Navigation**
-   - Fixed top navbar with user profile
-   - Collapsible sidebar with menu items
-   - Breadcrumb navigation for nested pages
-
-2. **Dashboard**
-   - Stat cards with icons and trends
-   - Interactive charts (Recharts)
-   - Quick action buttons
-   - Recent trip history
-
-3. **Map Interface**
-   - Full-screen map option
-   - Custom EV charging markers
-   - Route overlay with color coding
-   - Info popups on click
-
-4. **Forms & Inputs**
-   - Floating labels
-   - Real-time validation
-   - Auto-complete location search
-
-5. **Feedback**
-   - Toast notifications (React Hot Toast)
-   - Loading spinners
-   - Error states with retry options
-
----
-
-## 📸 Screenshots
-
-### Dashboard
-![Dashboard](docs/images/dashboard.png)
-
-*The main dashboard displays trip statistics, recent activity, and quick access to route planning.*
-
-### Route Planner
-![Route Planner](docs/images/route-planner.png)
-
-*Enter your starting point and destination to generate optimal EV-friendly routes.*
-
-### Map View
-![Map View](docs/images/map-view.png)
-
-*Interactive map showing the planned route with charging stations along the way.*
-
-### Charging Stations
-![Charging Stations](docs/images/charging-stations.png)
-
-*Browse and filter EV charging stations with detailed information.*
-
-### Trip Results
-![Trip Results](docs/images/trip-results.png)
-
-*View comprehensive trip details including weather impact and charging stops.*
-
-### EV Comparison
-![EV Comparison](docs/images/ev-comparison.png)
-
-*Compare different EV models side-by-side.*
-
----
-
-## 🔮 Future Improvements
-
-### Planned Features
-
-- [ ] **Real-time Traffic Updates**: Integrate live traffic data for dynamic route recalculation
-- [ ] **Mobile Application**: React Native mobile app for iOS and Android
-- [ ] **Charging Station Reservations**: Book charging spots in advance
-- [ ] **Multi-stop Routes**: Support for complex itineraries with multiple waypoints
-- [ ] **Offline Mode**: PWA enhancements for offline map viewing
-- [ ] **Social Features**: Community trips, reviews, and ratings
-- [ ] **Cost Calculator**: Detailed cost analysis with variable electricity rates
-- [ ] **Climate Impact**: CO2 savings tracking and environmental metrics
-- [ ] **Integration with Vehicle Telematics**: Connect with vehicle APIs for real-time battery status
-- [ ] **Push Notifications**: Alerts for charging station availability changes
-
-### Technical Improvements
-
-- [ ] TypeScript migration for better type safety
-- [ ] GraphQL API for more efficient data fetching
-- [ ] WebSocket for real-time updates
-- [ ] Enhanced caching strategy
-- [ ] Unit and integration tests
+- **Download Itinerary**: Inside `TripResultsPage`, click **Export PDF** to generate an offline travel dossier including:
+  - Total driving distance and expected total duration.
+  - Required charging stops with charging duration (minutes) and estimated cost in INR (₹).
+  - High-resolution altitude and battery discharge graphs.
+  - Emergency contact details and roadside assistance information.
+- **Instant QR Code Sharing**: Click **Share Trip** to create an encrypted read-only link (`/shared/:token`). Display the modal to let passengers scan the QR code and follow the live route from their smartphone.
 
 ---
 
 ## 📦 Deployment Guide
 
-### Production Build
+### Deploying Frontend to Vercel
 
-#### Backend
+The frontend is already configured with `vercel.json` rewrites for single-page routing:
 
-```
-bash
-cd backend
-npm run build  # If using TypeScript
-NODE_ENV=production npm start
-```
+1. Push your repository to GitHub.
+2. Import the repository into [Vercel](https://vercel.com/).
+3. Set **Root Directory** to `frontend`.
+4. Configure Build Command: `npm run build` and Output Directory: `dist`.
+5. Set environment variable `VITE_BACKEND_URL` to your production backend URL.
+6. Deploy!
 
-#### Frontend
+### Deploying Backend to Render / Railway
 
-```bash
-cd frontend
-npm run build
-```
-
-The build output will be in `frontend/dist/`
-
-### Deployment Platforms
-
-#### Backend Options
-- **Render**: `npm install` → `npm start` (port 5500)
-- **Railway**: Node.js template
-- **Heroku**: Node.js buildpack
-- **AWS EC2**: Manual server setup
-- **DigitalOcean**: App Platform or Droplets
-
-#### Frontend Options
-- **Vercel**: Connect GitHub repository
-- **Netlify**: Drag and drop dist folder
-- **Cloudflare Pages**: Static site hosting
-- **AWS S3 + CloudFront**: Static website hosting
-
-### Docker Deployment
-
-```
-dockerfile
-# Backend Dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-EXPOSE 5500
-CMD ["npm", "start"]
-```
+1. Create a new Web Service on [Render](https://render.com/) or [Railway](https://railway.app/).
+2. Set **Root Directory** to `backend`.
+3. Set Build Command: `npm install`.
+4. Set Start Command: `npm start`.
+5. Configure your production environment variables (`MONGO_URL`, `JWT_SECRET`, `TOMTOM_API_KEY`, `OPENWEATHER_API_KEY`, `FRONTEND_URL`).
+6. Deploy!
 
 ---
 
-## 👤 Author
+## 👤 Author & Developer
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Author-Gaurav%20Athode-blue?style=for-the-badge" alt="Author">
+  <img src="https://img.shields.io/badge/Developer-Hemavasanth-00F0FF?style=for-the-badge" alt="Developer">
 </p>
 
 <p align="center">
-  <strong>Gaurav Athode</strong><br>
-  Full-Stack Developer | MERN Stack Enthusiast
+  <strong>Hemavasanth</strong><br>
+  Full-Stack & Intelligent Systems Developer
 </p>
 
 <p align="center">
-  <a href="https://github.com/GauravAthode">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+  <a href="https://github.com/hemavasanth">
+    <img src="https://img.shields.io/badge/GitHub-hemavasanth-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
   </a>
-  <a href="https://www.linkedin.com/in/gaurav-athode-6b435a289/">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
-  </a>
-  <a href="mailto:gauravathode123@gmail.com">
-    <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email">
+  <a href="mailto:hemavasanth69@gmail.com">
+    <img src="https://img.shields.io/badge/Email-hemavasanth69%40gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email">
   </a>
 </p>
 
@@ -670,17 +690,4 @@ CMD ["npm", "start"]
 
 ## 📄 License
 
-This project is licensed under the MIT License.
-
----
-
-<p align="center">
-  Made with ❤️ by <strong>Gaurav Athode</strong>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Thank%20You-4CAF50?style=for-the-badge" alt="Thank You">
-</p>
-#   E c o - T r a c k - A I - 
- 
- 
+This project is licensed under the [ISC License](LICENSE) — free for educational, development, and personal use.
