@@ -678,7 +678,7 @@ The frontend is already configured with `vercel.json` rewrites for single-page r
 </p>
 
 <p align="center">
-  <a href="https://github.com/hemavasanth">
+  <a href="https://github.com/Vasanth69-code/">
     <img src="https://img.shields.io/badge/GitHub-hemavasanth-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
   </a>
   <a href="mailto:hemavasanth69@gmail.com">
